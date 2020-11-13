@@ -1,0 +1,72 @@
+if(project.plugins.findPlugin('jacoco')) {
+    jacocoTestReport {
+        if(project.ext.has('jacoco')) {
+            afterEvaluate {
+                classDirectories.from = files(classDirectories.files.collect {
+                    fileTree(dir: it, exclude: project['jacoco'].exclusions)
+                })
+            }
+        }
+        
+        reports {
+            xml.enabled true
+            csv.enabled false
+            html.enabled true
+            xml.destination file("${buildDir}/reports/jacoco/test/jacocoTestReport.xml") // Required for coveralls and sonar
+            html.destination file("${buildDir}/reports/jacoco")
+        }
+    }
+
+    jacocoTestCoverageVerification {
+        if(project.ext.has('jacoco')) {
+            afterEvaluate {
+                classDirectories.from = files(classDirectories.files.collect {
+                    fileTree(dir: it, exclude: project['jacoco'].exclusions)
+                })
+            }
+        }
+        
+        violationRules {
+            rule {
+                element = 'CLASS'
+
+                limit {
+                    counter = 'BRANCH'
+                    minimum = 1.00
+                }
+                limit {
+                    counter = 'COMPLEXITY'
+                    minimum = 1.00
+                }
+                limit {
+                    counter = 'INSTRUCTION'
+                    minimum = 1.00
+                }
+                limit {
+                    counter = 'LINE'
+                    minimum = 1.00
+                }
+            }
+        }
+    }
+    jacocoTestReport.finalizedBy jacocoTestCoverageVerification
+
+    test {
+        finalizedBy jacocoTestReport
+    }
+}
+
+test {
+    testLogging {
+        events 'passed', 'failed'
+    }
+}
+
+/** SonarQube config **/
+if(project.plugins.findPlugin('org.sonarqube')) {
+    sonarqube {
+        properties {
+            property 'sonar.junit.reportPaths', 'build/test-results/test'
+        }
+    }
+}
