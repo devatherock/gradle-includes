@@ -65,8 +65,20 @@ test {
 /** SonarQube config **/
 if(project.plugins.findPlugin('org.sonarqube')) {
     sonarqube {
+        def prLink = System.env['CIRCLE_PULL_REQUEST']
+
         properties {
             property 'sonar.junit.reportPaths', 'build/test-results/test'
+
+            // Required for PR analysis
+            if(prLink) {
+                property 'sonar.pullrequest.branch', System.env['CIRCLE_BRANCH']
+                property 'sonar.pullrequest.key', prLink.substring(prLink.lastIndexOf('/') + 1)
+                property 'sonar.pullrequest.base', 'master'
+                property 'sonar.pullrequest.provider', 'github'
+                property 'sonar.pullrequest.github.repository', "devatherock/${System.env['CIRCLE_PROJECT_REPONAME']}"
+                property 'sonar.pullrequest.github.endpoint', 'https://api.github.com/'
+            }
         }
     }
 }
