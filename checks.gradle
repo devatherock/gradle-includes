@@ -1,13 +1,13 @@
 if(project.plugins.findPlugin('jacoco')) {
     jacocoTestReport {
-        if(project.ext.has('jacoco')) {
+        if(project.ext.has('jacoco') && project['jacoco'].exclusions) {
             afterEvaluate {
                 classDirectories.from = files(classDirectories.files.collect {
                     fileTree(dir: it, exclude: project['jacoco'].exclusions)
                 })
             }
         }
-        
+
         reports {
             xml.enabled true
             csv.enabled false
@@ -18,17 +18,22 @@ if(project.plugins.findPlugin('jacoco')) {
     }
 
     jacocoTestCoverageVerification {
-        if(project.ext.has('jacoco')) {
+        if(project.ext.has('jacoco') && project['jacoco'].exclusions) {
             afterEvaluate {
                 classDirectories.from = files(classDirectories.files.collect {
                     fileTree(dir: it, exclude: project['jacoco'].exclusions)
                 })
             }
         }
-        
+
         violationRules {
             rule {
                 element = 'CLASS'
+
+                // Exclude classes with custom coverage rules
+                if(project.ext.has('jacoco') && project['jacoco'].coverageThresholds) {
+                    excludes = project['jacoco'].coverageThresholds.keySet() as List
+                }
 
                 limit {
                     counter = 'BRANCH'
@@ -45,6 +50,34 @@ if(project.plugins.findPlugin('jacoco')) {
                 limit {
                     counter = 'LINE'
                     minimum = 1.00
+                }
+            }
+
+            // Custom coverage rules
+            if(project.ext.has('jacoco') && project['jacoco'].coverageThresholds) {
+                project['jacoco'].coverageThresholds.each { className, thresholds ->
+                    rule {
+                        element = 'CLASS'
+                        includes = [
+                            className
+                        ]
+                        limit {
+                            counter = 'BRANCH'
+                            minimum = thresholds['BRANCH'] ?: 1.00
+                        }
+                        limit {
+                            counter = 'COMPLEXITY'
+                            minimum = thresholds['COMPLEXITY'] ?: 1.00
+                        }
+                        limit {
+                            counter = 'INSTRUCTION'
+                            minimum = thresholds['INSTRUCTION'] ?: 1.00
+                        }
+                        limit {
+                            counter = 'LINE'
+                            minimum = thresholds['LINE'] ?: 1.00
+                        }
+                    }                 
                 }
             }
         }
