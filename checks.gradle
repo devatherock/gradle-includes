@@ -91,6 +91,7 @@ if(project.plugins.findPlugin('jacoco')) {
 
 test {
     testLogging {
+        showStandardStreams = false
         events 'passed', 'failed'
     }
 }
