@@ -1,5 +1,9 @@
 # Changelog
 
+## 2021-03-30
+### Added
+- Config for spotless
+
 ## 2020-11-14
 ### Added
 - Sonar properties required for PR analysis

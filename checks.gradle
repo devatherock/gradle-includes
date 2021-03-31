@@ -118,3 +118,18 @@ if(project.plugins.findPlugin('org.sonarqube')) {
         }
     }
 }
+
+/** Spotless config **/
+if(project.plugins.findPlugin('com.diffplug.spotless')) {
+    spotless {
+        java {
+            importOrder('java', 'javax', 'org', 'io.github.devatherock', '')
+            eclipse().configFile('code-formatter.xml')
+        }
+        groovyGradle {
+            target '*.gradle'
+            greclipse().configFile('code-formatter.xml')
+        }
+    }
+    build.dependsOn spotlessApply
+}
