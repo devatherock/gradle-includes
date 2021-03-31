@@ -121,6 +121,10 @@ if(project.plugins.findPlugin('org.sonarqube')) {
 
 /** Spotless config **/
 if(project.plugins.findPlugin('com.diffplug.spotless')) {
+    File codeFormatter = new File('code-formatter.xml')
+    codeFormatter.delete()
+    codeFormatter << new URL('https://raw.githubusercontent.com/devatherock/gradle-includes/master/code-formatter.xml').text
+    
     spotless {
         java {
             importOrder('java', 'javax', 'org', 'io.github.devatherock', '')
