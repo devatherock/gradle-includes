@@ -1,5 +1,9 @@
 # Changelog
 
+## 2021-03-31
+### Added
+- Code to download spotless formatter file
+
 ## 2021-03-30
 ### Added
 - Config for spotless
