@@ -77,7 +77,7 @@ if(project.plugins.findPlugin('jacoco')) {
                             counter = 'LINE'
                             minimum = thresholds['LINE'] ?: 1.00
                         }
-                    }                 
+                    }
                 }
             }
         }
@@ -124,11 +124,15 @@ if(project.plugins.findPlugin('com.diffplug.spotless')) {
     File codeFormatter = new File('code-formatter.xml')
     codeFormatter.delete()
     codeFormatter << new URL('https://raw.githubusercontent.com/devatherock/gradle-includes/master/code-formatter.xml').text
-    
+
     spotless {
         java {
             importOrder('java', 'javax', 'org', 'io.github.devatherock', '')
             eclipse().configFile('code-formatter.xml')
+        }
+        groovy {
+            importOrder('java', 'javax', 'groovy', 'org', 'io.github.devatherock', '')
+            excludeJava()
         }
         groovyGradle {
             target '*.gradle'

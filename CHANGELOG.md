@@ -1,5 +1,9 @@
 # Changelog
 
+## 2021-04-03
+### Added
+- Spotless config for Groovy
+
 ## 2021-03-31
 ### Added
 - Code to download spotless formatter file
