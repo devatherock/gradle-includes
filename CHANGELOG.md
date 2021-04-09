@@ -1,5 +1,9 @@
 # Changelog
 
+## 2021-04-08
+### Added
+- Checkstyle for basic code style checks
+
 ## 2021-04-03
 ### Added
 - Spotless config for Groovy

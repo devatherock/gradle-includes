@@ -1,3 +1,5 @@
+apply plugin: 'checkstyle'
+
 if(project.plugins.findPlugin('jacoco')) {
     jacocoTestReport {
         if(project.ext.has('jacoco') && project['jacoco'].exclusions) {
@@ -96,6 +98,16 @@ test {
     }
 }
 
+/** Checkstyle config **/
+File checkstyleConfig = new File('checkstyle.xml')
+checkstyleConfig.delete()
+checkstyleConfig << new URL('https://raw.githubusercontent.com/devatherock/gradle-includes/master/config/checkstyle.xml').text
+
+checkstyle {
+    configFile rootProject.file('checkstyle.xml')
+    toolVersion = '8.41'
+}
+
 /** SonarQube config **/
 if(project.plugins.findPlugin('org.sonarqube')) {
     sonarqube {
@@ -123,7 +135,7 @@ if(project.plugins.findPlugin('org.sonarqube')) {
 if(project.plugins.findPlugin('com.diffplug.spotless')) {
     File codeFormatter = new File('code-formatter.xml')
     codeFormatter.delete()
-    codeFormatter << new URL('https://raw.githubusercontent.com/devatherock/gradle-includes/master/code-formatter.xml').text
+    codeFormatter << new URL('https://raw.githubusercontent.com/devatherock/gradle-includes/master/config/code-formatter.xml').text
 
     spotless {
         java {
