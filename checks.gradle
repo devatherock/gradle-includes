@@ -153,3 +153,19 @@ if(project.plugins.findPlugin('com.diffplug.spotless')) {
     }
     build.dependsOn spotlessApply
 }
+
+/** Dependency check plugin config **/
+if (project.plugins.findPlugin('org.owasp.dependencycheck')) {
+    dependencyCheck {
+        data {
+            directory = "${System.getProperty('user.home')}${System.properties['file.separator']}.gradle"
+        }
+        analyzers {
+            assemblyEnabled = false
+        }
+        failBuildOnCVSS = 7
+        cveValidForHours = 24
+    }
+
+    check.dependsOn dependencyCheckAggregate
+}

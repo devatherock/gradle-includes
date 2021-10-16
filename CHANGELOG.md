@@ -1,5 +1,9 @@
 # Changelog
 
+## 2021-10-16
+### Added
+- Configuration for dependency check plugin
+
 ## 2021-04-08
 ### Added
 - Checkstyle for basic code style checks
