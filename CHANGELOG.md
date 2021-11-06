@@ -1,5 +1,9 @@
 # Changelog
 
+## 2021-11-06
+### Added
+- Configuration for ktlint plugin
+
 ## 2021-10-16
 ### Added
 - Configuration for dependency check plugin

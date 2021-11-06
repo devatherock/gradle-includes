@@ -154,6 +154,27 @@ if(project.plugins.findPlugin('com.diffplug.spotless')) {
     build.dependsOn spotlessApply
 }
 
+/** ktlint config **/
+if(project.plugins.findPlugin('org.jlleitschuh.gradle.ktlint')) {
+    ktlint {
+        version = '0.43.0'
+        android = false
+        outputToConsole = true
+        enableExperimentalRules = true
+        disabledRules = [
+            'final-newline'
+        ]
+        reporters {
+            reporter 'checkstyle'
+        }
+    }
+
+    // To format code in dev instead of failing build
+    if(!Boolean.getBoolean('CI')) {
+        compileKotlin.dependsOn ktlintFormat
+    }
+}
+
 /** Dependency check plugin config **/
 if (project.plugins.findPlugin('org.owasp.dependencycheck')) {
     dependencyCheck {
