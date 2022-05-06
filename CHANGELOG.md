@@ -1,5 +1,9 @@
 # Changelog
 
+## 2022-05-05
+### Added
+- `publish.gradle` to publish jars
+
 ## 2021-11-06
 ### Added
 - Configuration for ktlint plugin
