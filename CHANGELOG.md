@@ -1,5 +1,9 @@
 # Changelog
 
+## 2022-05-07
+### Changed
+- Configured test logging for all test tasks
+
 ## 2022-05-05
 ### Added
 - `publish.gradle` to publish jars
