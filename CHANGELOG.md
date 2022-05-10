@@ -1,5 +1,9 @@
 # Changelog
 
+## 2022-05-09
+### Added
+- `integration.gradle` with integration test config
+
 ## 2022-05-07
 ### Changed
 - Configured test logging for all test tasks
