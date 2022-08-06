@@ -1,5 +1,9 @@
 # Changelog
 
+## 2022-08-06
+### Added
+- Kotlin lint config to spotless
+
 ## 2022-05-09
 ### Added
 - `integration.gradle` with integration test config

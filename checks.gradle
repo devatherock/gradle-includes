@@ -150,6 +150,9 @@ if(project.plugins.findPlugin('com.diffplug.spotless')) {
             target '*.gradle'
             greclipse().configFile('code-formatter.xml')
         }
+        kotlin {
+            ktlint()
+        }
     }
     build.dependsOn spotlessApply
 }
