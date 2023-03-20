@@ -1,5 +1,9 @@
 # Changelog
 
+## 2022-03-19
+### Added
+- Suppression file for `dependency-check` plugin
+
 ## 2022-08-06
 ### Added
 - Kotlin lint config to spotless
