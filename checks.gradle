@@ -11,11 +11,11 @@ if(project.plugins.findPlugin('jacoco')) {
         }
 
         reports {
-            xml.enabled true
-            csv.enabled false
-            html.enabled true
-            xml.destination file("${buildDir}/reports/jacoco/test/jacocoTestReport.xml") // Required for coveralls and sonar
-            html.destination file("${buildDir}/reports/jacoco")
+            xml.required = true
+            csv.required = false
+            html.required = true
+            xml.outputLocation = file("${buildDir}/reports/jacoco/test/jacocoTestReport.xml") // Required for coveralls and sonar
+            html.outputLocation = file("${buildDir}/reports/jacoco")
         }
     }
 
