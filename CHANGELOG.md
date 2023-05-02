@@ -1,5 +1,9 @@
 # Changelog
 
+## 2023-05-02
+### Changed
+- Addressed gradle 7 `Entry is a duplicate but no duplicate handling strategy has been set` error in `Copy` task
+
 ## 2022-03-19
 ### Added
 - Suppression file for `dependency-check` plugin

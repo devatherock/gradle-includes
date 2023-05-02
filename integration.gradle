@@ -22,3 +22,8 @@ task integrationTest(type: Test) {
         'micronaut.env.deduction': 'false'
     ])
 }
+
+// To address gradle 7 'Entry is a duplicate but no duplicate handling strategy has been set' error
+tasks.withType(Copy) {
+    duplicatesStrategy = 'exclude'
+}
