@@ -1,5 +1,9 @@
 # Changelog
 
+## 2023-05-06
+### Added
+- [#7](https://github.com/devatherock/gradle-includes/issues/7): Spotless config to remove unused imports
+
 ## 2023-05-02
 ### Changed
 - Addressed gradle 7 `Entry is a duplicate but no duplicate handling strategy has been set` error in `Copy` task

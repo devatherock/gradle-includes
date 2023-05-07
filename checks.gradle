@@ -136,11 +136,13 @@ if(project.plugins.findPlugin('com.diffplug.spotless')) {
     File codeFormatter = new File('code-formatter.xml')
     codeFormatter.delete()
     codeFormatter << new URL('https://raw.githubusercontent.com/devatherock/gradle-includes/master/config/code-formatter.xml').text
+    def eclipseFormatterVersion = '4.21.0'
 
     spotless {
         java {
             importOrder('java', 'javax', 'org', 'io.github.devatherock', '')
-            eclipse().configFile('code-formatter.xml')
+            removeUnusedImports()
+            eclipse(eclipseFormatterVersion).configFile('code-formatter.xml')
         }
         groovy {
             importOrder('java', 'javax', 'groovy', 'org', 'io.github.devatherock', '')
@@ -148,7 +150,7 @@ if(project.plugins.findPlugin('com.diffplug.spotless')) {
         }
         groovyGradle {
             target '*.gradle'
-            greclipse().configFile('code-formatter.xml')
+            greclipse(eclipseFormatterVersion).configFile('code-formatter.xml')
         }
         kotlin {
             ktlint()
