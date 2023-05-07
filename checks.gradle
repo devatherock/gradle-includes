@@ -136,28 +136,45 @@ if(project.plugins.findPlugin('com.diffplug.spotless')) {
     File codeFormatter = new File('code-formatter.xml')
     codeFormatter.delete()
     codeFormatter << new URL('https://raw.githubusercontent.com/devatherock/gradle-includes/master/config/code-formatter.xml').text
-    def eclipseFormatterVersion = '4.21.0'
+    def eclipseFormatterVersion = '4.21'
 
     spotless {
-        java {
-            importOrder('java', 'javax', 'org', 'io.github.devatherock', '')
-            removeUnusedImports()
-            eclipse(eclipseFormatterVersion).configFile('code-formatter.xml')
+        if(project.plugins.findPlugin('java')) {
+            java {
+                importOrder('java', 'javax', 'org', 'io.github.devatherock', '')
+                removeUnusedImports()
+                eclipse(eclipseFormatterVersion).configFile('code-formatter.xml')
+            }
+
+            kotlin {
+                ktlint()
+            }
         }
-        groovy {
-            importOrder('java', 'javax', 'groovy', 'org', 'io.github.devatherock', '')
-            excludeJava()
+
+        if(project.plugins.findPlugin('groovy')) {
+            groovy {
+                importOrder('java', 'javax', 'groovy', 'org', 'io.github.devatherock', '')
+                excludeJava()
+            }
         }
+
         groovyGradle {
             target '*.gradle'
             greclipse(eclipseFormatterVersion).configFile('code-formatter.xml')
         }
-        kotlin {
-            ktlint()
+
+        format 'xml', {
+            target(getPropertyValueAsArray('spotlessXmlTargets') ?: '**/*.xml')
+            eclipseWtp('xml')
         }
     }
+
     build.dependsOn spotlessApply
-    checkstyleMain.mustRunAfter(spotlessApply)
+
+    // checkstyleMain task won't exist if there are no main java source files
+    if(project.tasks.findByPath('checkstyleMain')) {
+        checkstyleMain.mustRunAfter(spotlessApply)
+    }
 }
 
 /** ktlint config **/
@@ -192,8 +209,31 @@ if (project.plugins.findPlugin('org.owasp.dependencycheck')) {
         }
         failBuildOnCVSS = 7
         cveValidForHours = 24
+        scanConfigurations = [
+            'annotationProcessor',
+            'compileClasspath',
+            'implementation',
+            'runtimeClasspath',
+            'runtimeOnly'
+        ]
         suppressionFile = 'https://raw.githubusercontent.com/devatherock/gradle-includes/master/config/dependency-check-suppressions.xml'
     }
 
     check.dependsOn dependencyCheckAggregate
+}
+
+/**
+ * Fetches the value of a gradle property as an array
+ *
+ * @param propertyName
+ * @return the property value array
+ */
+def getPropertyValueAsArray(String propertyName) {
+    def propertyValues = null
+
+    if(project.hasProperty(propertyName)) {
+        propertyValues = project[propertyName].split(',') as Object[]
+    }
+
+    return propertyValues
 }
