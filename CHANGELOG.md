@@ -6,6 +6,7 @@
 
 ### Changed
 - Upgraded Checkstyle to `10.10.0` from `8.41`
+- Made checkstyle run after spotless, so that spotless can remove unused imports before checkstyle runs
 
 ## 2023-05-06
 ### Added

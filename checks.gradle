@@ -157,6 +157,7 @@ if(project.plugins.findPlugin('com.diffplug.spotless')) {
         }
     }
     build.dependsOn spotlessApply
+    checkstyleMain.mustRunAfter(spotlessApply)
 }
 
 /** ktlint config **/
