@@ -144,10 +144,12 @@ if(project.plugins.findPlugin('com.diffplug.spotless')) {
                 importOrder('java', 'javax', 'org', 'io.github.devatherock', '')
                 removeUnusedImports()
                 eclipse(eclipseFormatterVersion).configFile('code-formatter.xml')
+                toggleOffOn()
             }
 
             kotlin {
                 ktlint()
+                toggleOffOn()
             }
         }
 
@@ -155,17 +157,20 @@ if(project.plugins.findPlugin('com.diffplug.spotless')) {
             groovy {
                 importOrder('java', 'javax', 'groovy', 'org', 'io.github.devatherock', '')
                 excludeJava()
+                toggleOffOn()
             }
         }
 
         groovyGradle {
             target '*.gradle'
             greclipse(eclipseFormatterVersion).configFile('code-formatter.xml')
+            toggleOffOn()
         }
 
         format 'xml', {
             target(getPropertyValueAsArray('spotlessXmlTargets') ?: '**/*.xml')
             eclipseWtp('xml')
+            toggleOffOn()
         }
     }
 

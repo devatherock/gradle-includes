@@ -5,6 +5,7 @@
 - [#8](https://github.com/devatherock/gradle-includes/issues/8): Checkstyle rules to detect unused imports and local variables
 - CI pipeline to check the gradle files for formatting
 - Spotless config to format xml files
+- Toggles to enable and disable spotless formatting
 
 ### Changed
 - Upgraded Checkstyle to `10.10.0` from `8.41`
