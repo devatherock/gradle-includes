@@ -1,5 +1,12 @@
 # Changelog
 
+## 2023-05-07
+### Added
+- [#8](https://github.com/devatherock/gradle-includes/issues/8): Checkstyle rules to detect unused imports and local variables
+
+### Changed
+- Upgraded Checkstyle to `10.10.0` from `8.41`
+
 ## 2023-05-06
 ### Added
 - [#7](https://github.com/devatherock/gradle-includes/issues/7): Spotless config to remove unused imports
