@@ -1,2 +1,6 @@
 /.project
 *.iml
+.gradle
+build
+code-formatter.xml
+checkstyle.xml

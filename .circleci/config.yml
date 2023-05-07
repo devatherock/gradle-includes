@@ -1,0 +1,43 @@
+work_directory: &work_directory
+  working_directory: ~/gradle-includes
+
+resource_class: &resource_class
+  resource_class: small
+  
+executors:
+  jdk-executor:
+    docker:
+      - image: cimg/openjdk:17.0
+        auth:
+          username: $DOCKER_USERNAME
+          password: $DOCKER_PASSWORD
+    <<: *resource_class
+    <<: *work_directory
+
+version: 2.1
+jobs:
+  test:
+    executor: jdk-executor
+    steps:
+      - checkout
+      - restore_cache:
+          keys:
+            - v1-dependencies-{{ checksum "build.gradle" }}
+            - v1-dependencies
+      - run: |
+          ./gradlew check
+      - save_cache:
+          paths:
+            - ~/.gradle
+          key: v1-dependencies-{{ checksum "build.gradle" }}    
+
+workflows:
+  version: 2.1
+  pr_check:
+    jobs:
+      - test:
+          context:
+            - docker-credentials
+          filters:
+            branches:
+              ignore: master
