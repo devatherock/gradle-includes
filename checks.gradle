@@ -168,7 +168,7 @@ if(project.plugins.findPlugin('com.diffplug.spotless')) {
         }
 
         format 'xml', {
-            target(getPropertyValueAsArray('spotlessXmlTargets') ?: '**/*.xml')
+            target(getPropertyValueAsArray('spotless.xml.targets') ?: '**/*.xml')
             eclipseWtp('xml')
             toggleOffOn()
         }
