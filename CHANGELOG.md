@@ -1,5 +1,9 @@
 # Changelog
 
+## 2023-05-08
+### Changed
+- [#16](https://github.com/devatherock/gradle-includes/issues/16): Renamed `spotlessXmlTargets` property to `spotless.xml.targets`
+
 ## 2023-05-07
 ### Added
 - [#8](https://github.com/devatherock/gradle-includes/issues/8): Checkstyle rules to detect unused imports and local variables
