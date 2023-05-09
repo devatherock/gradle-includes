@@ -1,5 +1,9 @@
 # Changelog
 
+## 2023-05-09
+### Changed
+- Moved checkstyle, spotless and dependency check into a separate file, so that projects with custom test tasks can import these checks separately
+
 ## 2023-05-08
 ### Changed
 - [#16](https://github.com/devatherock/gradle-includes/issues/16): Renamed `spotlessXmlTargets` property to `spotless.xml.targets`
