@@ -1,4 +1,4 @@
-apply plugin: 'checkstyle'
+apply from: 'https://raw.githubusercontent.com/devatherock/gradle-includes/master/non-test-checks.gradle'
 
 if(project.plugins.findPlugin('jacoco')) {
     jacocoTestReport {
@@ -98,16 +98,6 @@ tasks.withType(Test) {
     }
 }
 
-/** Checkstyle config **/
-File checkstyleConfig = new File('checkstyle.xml')
-checkstyleConfig.delete()
-checkstyleConfig << new URL('https://raw.githubusercontent.com/devatherock/gradle-includes/master/config/checkstyle.xml').text
-
-checkstyle {
-    configFile rootProject.file('checkstyle.xml')
-    toolVersion = '10.10.0'
-}
-
 /** SonarQube config **/
 if(project.plugins.findPlugin('org.sonarqube')) {
     sonarqube {
@@ -129,116 +119,4 @@ if(project.plugins.findPlugin('org.sonarqube')) {
             }
         }
     }
-}
-
-/** Spotless config **/
-if(project.plugins.findPlugin('com.diffplug.spotless')) {
-    File codeFormatter = new File('code-formatter.xml')
-    codeFormatter.delete()
-    codeFormatter << new URL('https://raw.githubusercontent.com/devatherock/gradle-includes/master/config/code-formatter.xml').text
-    def eclipseFormatterVersion = '4.21'
-
-    spotless {
-        if(project.plugins.findPlugin('java')) {
-            java {
-                importOrder('java', 'javax', 'org', 'io.github.devatherock', '')
-                removeUnusedImports()
-                eclipse(eclipseFormatterVersion).configFile('code-formatter.xml')
-                toggleOffOn()
-            }
-
-            kotlin {
-                ktlint()
-                toggleOffOn()
-            }
-        }
-
-        if(project.plugins.findPlugin('groovy')) {
-            groovy {
-                importOrder('java', 'javax', 'groovy', 'org', 'io.github.devatherock', '')
-                excludeJava()
-                toggleOffOn()
-            }
-        }
-
-        groovyGradle {
-            target '*.gradle'
-            greclipse(eclipseFormatterVersion).configFile('code-formatter.xml')
-            toggleOffOn()
-        }
-
-        format 'xml', {
-            target(getPropertyValueAsArray('spotless.xml.targets') ?: '**/*.xml')
-            eclipseWtp('xml')
-            toggleOffOn()
-        }
-    }
-
-    build.dependsOn spotlessApply
-
-    // checkstyleMain task won't exist if there are no main java source files
-    if(project.tasks.findByPath('checkstyleMain')) {
-        checkstyleMain.mustRunAfter(spotlessApply)
-    }
-}
-
-/** ktlint config **/
-if(project.plugins.findPlugin('org.jlleitschuh.gradle.ktlint')) {
-    ktlint {
-        version = '0.43.0'
-        android = false
-        outputToConsole = true
-        enableExperimentalRules = true
-        disabledRules = [
-            'final-newline'
-        ]
-        reporters {
-            reporter 'checkstyle'
-        }
-    }
-
-    // To format code in dev instead of failing build
-    if(!Boolean.getBoolean('CI')) {
-        compileKotlin.dependsOn ktlintFormat
-    }
-}
-
-/** Dependency check plugin config **/
-if (project.plugins.findPlugin('org.owasp.dependencycheck')) {
-    dependencyCheck {
-        data {
-            directory = "${System.getProperty('user.home')}${System.properties['file.separator']}.gradle"
-        }
-        analyzers {
-            assemblyEnabled = false
-        }
-        failBuildOnCVSS = 7
-        cveValidForHours = 24
-        scanConfigurations = [
-            'annotationProcessor',
-            'compileClasspath',
-            'implementation',
-            'runtimeClasspath',
-            'runtimeOnly'
-        ]
-        suppressionFile = 'https://raw.githubusercontent.com/devatherock/gradle-includes/master/config/dependency-check-suppressions.xml'
-    }
-
-    check.dependsOn dependencyCheckAggregate
-}
-
-/**
- * Fetches the value of a gradle property as an array
- *
- * @param propertyName
- * @return the property value array
- */
-def getPropertyValueAsArray(String propertyName) {
-    def propertyValues = null
-
-    if(project.hasProperty(propertyName)) {
-        propertyValues = project[propertyName].split(',') as Object[]
-    }
-
-    return propertyValues
 }
