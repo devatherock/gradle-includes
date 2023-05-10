@@ -108,7 +108,7 @@ if (project.plugins.findPlugin('org.owasp.dependencycheck')) {
             'runtimeClasspath',
             'runtimeOnly'
         ]
-        suppressionFile = 'https://raw.githubusercontent.com/devatherock/gradle-includes/master/config/dependency-check-suppressions.xml'
+        suppressionFile = "${getPropertyValue('gradle.includes.location', 'https://raw.githubusercontent.com/devatherock/gradle-includes/master')}/config/dependency-check-suppressions.xml"
     }
 
     check.dependsOn dependencyCheckAggregate
@@ -123,11 +123,22 @@ if (project.plugins.findPlugin('org.owasp.dependencycheck')) {
 def getPropertyValueAsArray(String propertyName) {
     def propertyValues = null
 
-    if(project.hasProperty(propertyName)) {
+    if (project.hasProperty(propertyName)) {
         propertyValues = project[propertyName].split(',') as Object[]
     }
 
     return propertyValues
+}
+
+/**
+ * Fetches the value of a gradle property
+ *
+ * @param propertyName
+ * @param propertyValueDefault
+ * @return the property value
+ */
+String getPropertyValue(String propertyName, String propertyValueDefault = null) {
+    return project.hasProperty(propertyName) ? project[propertyName] : propertyValueDefault
 }
 
 /**
@@ -138,5 +149,13 @@ def getPropertyValueAsArray(String propertyName) {
 void downloadFile(String fileName) {
     File file = new File(fileName)
     file.delete()
-    file << new URL("https://raw.githubusercontent.com/devatherock/gradle-includes/master/config/${fileName}").text
+
+    String gradleIncludesLocation = getPropertyValue('gradle.includes.location',
+            'https://raw.githubusercontent.com/devatherock/gradle-includes/master')
+
+    if (gradleIncludesLocation =~ '^[a-z]+://.+') {
+        file << new URL("${gradleIncludesLocation}/config/${fileName}").text
+    } else {
+        file << new File("${gradleIncludesLocation}/config/${fileName}").text
+    }
 }

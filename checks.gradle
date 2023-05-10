@@ -1,4 +1,4 @@
-apply from: 'https://raw.githubusercontent.com/devatherock/gradle-includes/master/non-test-checks.gradle'
+apply from: "${getPropertyValue('gradle.includes.location', 'https://raw.githubusercontent.com/devatherock/gradle-includes/master')}/non-test-checks.gradle"
 
 if(project.plugins.findPlugin('jacoco')) {
     jacocoTestReport {
@@ -119,4 +119,15 @@ if(project.plugins.findPlugin('org.sonarqube')) {
             }
         }
     }
+}
+
+/**
+ * Fetches the value of a gradle property
+ *
+ * @param propertyName
+ * @param propertyValueDefault
+ * @return the property value
+ */
+String getPropertyValue(String propertyName, String propertyValueDefault = null) {
+    return project.hasProperty(propertyName) ? project[propertyName] : propertyValueDefault
 }
