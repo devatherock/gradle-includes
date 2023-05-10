@@ -1,5 +1,9 @@
 # Changelog
 
+## 2023-05-10
+### Removed
+- [#9](https://github.com/devatherock/gradle-includes/issues/9): Dependency check suppression for Jackson 2.14.2
+
 ## 2023-05-09
 ### Added
 - [#10](https://github.com/devatherock/gradle-includes/issues/10): Codenarc plugin config
