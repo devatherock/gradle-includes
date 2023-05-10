@@ -1,0 +1,21 @@
+<ruleset xmlns="http://codenarc.org/ruleset/1.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://codenarc.org/ruleset/1.0 http://codenarc.org/ruleset-schema.xsd"
+	xsi:noNamespaceSchemaLocation="http://codenarc.org/ruleset-schema.xsd">
+	<ruleset-ref path='rulesets/imports.xml'>
+		<rule-config name='DuplicateImport' />
+		<rule-config name='ImportFromSamePackage' />
+		<rule-config name='NoWildcardImports' />
+		<rule-config name='UnnecessaryGroovyImport' />
+		<rule-config name='UnusedImport' />
+	</ruleset-ref>
+
+	<ruleset-ref path='rulesets/unused.xml'>
+		<rule-config name='UnusedMethodParameter' />
+		<rule-config name='UnusedPrivateField' />
+		<rule-config name='UnusedPrivateMethod' />
+		<rule-config name='UnusedPrivateMethodParameter' />
+		<rule-config name='UnusedVariable' />
+	</ruleset-ref>
+
+</ruleset>

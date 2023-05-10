@@ -4,3 +4,4 @@
 build
 code-formatter.xml
 checkstyle.xml
+codenarc.xml

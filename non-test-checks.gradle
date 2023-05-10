@@ -1,28 +1,36 @@
 apply plugin: 'checkstyle'
+apply plugin: 'codenarc'
 
 /** Checkstyle config **/
-File checkstyleConfig = new File('checkstyle.xml')
-checkstyleConfig.delete()
-checkstyleConfig << new URL('https://raw.githubusercontent.com/devatherock/gradle-includes/master/config/checkstyle.xml').text
+String checkstyleConfig = 'checkstyle.xml'
+downloadFile(checkstyleConfig)
 
 checkstyle {
-    configFile rootProject.file('checkstyle.xml')
+    configFile rootProject.file(checkstyleConfig)
     toolVersion = '10.10.0'
+}
+
+/** Codenarc config **/
+String codenarcConfig = 'codenarc.xml'
+downloadFile(codenarcConfig)
+
+codenarc {
+    configFile rootProject.file(codenarcConfig)
+    toolVersion = '3.2.0'
 }
 
 /** Spotless config **/
 if(project.plugins.findPlugin('com.diffplug.spotless')) {
-    File codeFormatter = new File('code-formatter.xml')
-    codeFormatter.delete()
-    codeFormatter << new URL('https://raw.githubusercontent.com/devatherock/gradle-includes/master/config/code-formatter.xml').text
-    def eclipseFormatterVersion = '4.21'
+    String codeFormatterConfig = 'code-formatter.xml'
+    downloadFile(codeFormatterConfig)
+    def eclipseFormatterVersion = '4.26'
 
     spotless {
         if(project.plugins.findPlugin('java')) {
             java {
                 importOrder('java', 'javax', 'org', 'io.github.devatherock', '')
                 removeUnusedImports()
-                eclipse(eclipseFormatterVersion).configFile('code-formatter.xml')
+                eclipse(eclipseFormatterVersion).configFile(codeFormatterConfig)
                 toggleOffOn()
             }
 
@@ -120,4 +128,15 @@ def getPropertyValueAsArray(String propertyName) {
     }
 
     return propertyValues
+}
+
+/**
+ * Downloads a file from github
+ *
+ * @param fileName
+ */
+void downloadFile(String fileName) {
+    File file = new File(fileName)
+    file.delete()
+    file << new URL("https://raw.githubusercontent.com/devatherock/gradle-includes/master/config/${fileName}").text
 }

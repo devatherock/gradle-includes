@@ -1,6 +1,9 @@
 # Changelog
 
 ## 2023-05-09
+### Added
+- [#10](https://github.com/devatherock/gradle-includes/issues/10): Codenarc plugin config
+
 ### Changed
 - Moved checkstyle, spotless and dependency check into a separate file, so that projects with custom test tasks can import these checks separately
 
