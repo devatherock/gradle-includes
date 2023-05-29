@@ -93,7 +93,7 @@ if(project.plugins.findPlugin('jacoco')) {
 
 tasks.withType(Test) {
     testLogging {
-        showStandardStreams = false
+        showStandardStreams = Boolean.getBoolean('test.logs')
         events 'passed', 'failed'
     }
 }
