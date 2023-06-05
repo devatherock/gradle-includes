@@ -1,5 +1,9 @@
 # Changelog
 
+## 2023-06-04
+### Changed
+- Disabled OSS Index analyzer by default
+
 ## 2023-05-29
 ### Added
 - JVM arg to enable test logs
