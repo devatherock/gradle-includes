@@ -98,6 +98,9 @@ if (project.plugins.findPlugin('org.owasp.dependencycheck')) {
         }
         analyzers {
             assemblyEnabled = false
+            ossIndex {
+                enabled = Boolean.parseBoolean(getPropertyValue('dependency.check.oss.enabled', 'false'))
+            }
         }
         failBuildOnCVSS = 7
         cveValidForHours = 24
