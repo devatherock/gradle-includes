@@ -1,5 +1,9 @@
 # Changelog
 
+## 2023-06-21
+### Changed
+- Upgraded `checkstyle` version to `10.12.0`
+
 ## 2023-06-04
 ### Changed
 - Disabled OSS Index analyzer by default
