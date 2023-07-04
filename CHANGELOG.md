@@ -1,5 +1,9 @@
 # Changelog
 
+## 2023-07-04
+### Added
+- Suppression rule for Jackson's `CVE-2023-35116`
+
 ## 2023-06-21
 ### Changed
 - Upgraded `checkstyle` version to `10.12.0`
