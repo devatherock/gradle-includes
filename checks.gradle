@@ -1,6 +1,10 @@
 apply from: "${getPropertyValue('gradle.includes.location', 'https://raw.githubusercontent.com/devatherock/gradle-includes/master')}/non-test-checks.gradle"
 
 if(project.plugins.findPlugin('jacoco')) {
+    jacoco {
+        toolVersion = '0.8.8'
+    }
+
     jacocoTestReport {
         if(project.ext.has('jacoco') && project['jacoco'].exclusions) {
             afterEvaluate {

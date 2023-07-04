@@ -4,6 +4,9 @@
 ### Added
 - Suppression rule for Jackson's `CVE-2023-35116`
 
+### Changed
+- Set jacoco version to `0.8.8`. Higher versions are failing when used with graalvm native agent
+
 ## 2023-06-21
 ### Changed
 - Upgraded `checkstyle` version to `10.12.0`
