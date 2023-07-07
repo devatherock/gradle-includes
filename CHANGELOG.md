@@ -1,5 +1,9 @@
 # Changelog
 
+## 2023-07-07
+### Changed
+- Increased the ttl of the dependency check plugin's cache
+
 ## 2023-07-04
 ### Added
 - Suppression rule for Jackson's `CVE-2023-35116`
