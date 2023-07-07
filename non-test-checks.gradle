@@ -103,7 +103,7 @@ if (project.plugins.findPlugin('org.owasp.dependencycheck')) {
             }
         }
         failBuildOnCVSS = 7
-        cveValidForHours = 24
+        cveValidForHours = 240
         scanConfigurations = [
             'annotationProcessor',
             'compileClasspath',
