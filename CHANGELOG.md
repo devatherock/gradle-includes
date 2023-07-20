@@ -1,5 +1,9 @@
 # Changelog
 
+## 2023-07-19
+### Added
+- Environment variable to disable `dependencyCheckAggregate` task
+
 ## 2023-07-07
 ### Changed
 - Increased the ttl of the dependency check plugin's cache

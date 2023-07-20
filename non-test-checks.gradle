@@ -99,7 +99,7 @@ if (project.plugins.findPlugin('org.owasp.dependencycheck')) {
         analyzers {
             assemblyEnabled = false
             ossIndex {
-                enabled = Boolean.parseBoolean(getPropertyValue('dependency.check.oss.enabled', 'false'))
+                enabled = Boolean.parseBoolean(getPropertyValue('dependency.check.oss.enabled', 'true'))
             }
         }
         failBuildOnCVSS = 7
@@ -114,6 +114,8 @@ if (project.plugins.findPlugin('org.owasp.dependencycheck')) {
         suppressionFile = "${getPropertyValue('gradle.includes.location', 'https://raw.githubusercontent.com/devatherock/gradle-includes/master')}/config/dependency-check-suppressions.xml"
     }
 
+    dependencyCheckAggregate.enabled = System.env.DEPENDENCY_CHECK_ENABLED ?
+            Boolean.parseBoolean(System.env.DEPENDENCY_CHECK_ENABLED) : true
     check.dependsOn dependencyCheckAggregate
 }
 
