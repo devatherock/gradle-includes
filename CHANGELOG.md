@@ -1,5 +1,9 @@
 # Changelog
 
+## 2023-10-31
+### Changed
+- Disabled `retirejs` analyzer in dependency check plugin
+
 ## 2023-07-19
 ### Added
 - Environment variable to disable `dependencyCheckAggregate` task

@@ -101,6 +101,9 @@ if (project.plugins.findPlugin('org.owasp.dependencycheck')) {
             ossIndex {
                 enabled = Boolean.parseBoolean(getPropertyValue('dependency.check.oss.enabled', 'true'))
             }
+            retirejs {
+                enabled = Boolean.parseBoolean(getPropertyValue('dependency.check.retirejs.enabled', 'false'))
+            }
         }
         failBuildOnCVSS = 7
         cveValidForHours = 240
