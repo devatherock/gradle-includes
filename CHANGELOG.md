@@ -1,5 +1,9 @@
 # Changelog
 
+## 2023-11-26
+### Added
+- Data feed URL for dependency check plugin
+
 ## 2023-11-25
 ### Added
 - NVD API key, for 9+ versions of dependency check plugin
