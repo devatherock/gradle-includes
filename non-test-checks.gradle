@@ -93,6 +93,10 @@ if(project.plugins.findPlugin('org.jlleitschuh.gradle.ktlint')) {
 /** Dependency check plugin config **/
 if (project.plugins.findPlugin('org.owasp.dependencycheck')) {
     dependencyCheck {
+        nvd {
+            apiKey = System.env.NVD_API_KEY
+            validForHours = 240
+        }
         data {
             directory = "${System.getProperty('user.home')}${System.properties['file.separator']}.gradle"
         }
@@ -106,7 +110,6 @@ if (project.plugins.findPlugin('org.owasp.dependencycheck')) {
             }
         }
         failBuildOnCVSS = 7
-        cveValidForHours = 240
         scanConfigurations = [
             'annotationProcessor',
             'compileClasspath',

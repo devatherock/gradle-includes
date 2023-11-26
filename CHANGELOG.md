@@ -1,5 +1,9 @@
 # Changelog
 
+## 2023-11-25
+### Added
+- NVD API key, for 9+ versions of dependency check plugin
+
 ## 2023-10-31
 ### Changed
 - Disabled `retirejs` analyzer in dependency check plugin
