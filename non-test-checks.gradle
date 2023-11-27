@@ -97,7 +97,7 @@ if (project.plugins.findPlugin('org.owasp.dependencycheck')) {
             apiKey = System.env.NVD_API_KEY
             validForHours = 240
 
-            if (Boolean.parseBoolean(getPropertyValue('dependency.check.nvd.useDatafeedUrl', 'true'))) {
+            if (Boolean.parseBoolean(getPropertyValue('dependency.check.nvd.useDatafeedUrl', 'false'))) {
                 datafeedUrl = 'https://jeremylong.github.io/DependencyCheck/hb_nvd/'
             }
         }

@@ -2,7 +2,7 @@
 
 ## 2023-11-27
 ### Changed
-- Defaulted to using data feed URL in dependency check
+- Defaulted to not using data feed URL in dependency check
 
 ## 2023-11-26
 ### Added
