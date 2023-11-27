@@ -96,7 +96,10 @@ if (project.plugins.findPlugin('org.owasp.dependencycheck')) {
         nvd {
             apiKey = System.env.NVD_API_KEY
             validForHours = 240
-            datafeedUrl = 'https://jeremylong.github.io/DependencyCheck/hb_nvd/'
+
+            if (Boolean.parseBoolean(getPropertyValue('dependency.check.nvd.useDatafeedUrl', 'false'))) {
+                datafeedUrl = 'https://jeremylong.github.io/DependencyCheck/hb_nvd/'
+            }
         }
         data {
             directory = "${System.getProperty('user.home')}${System.properties['file.separator']}.gradle"
