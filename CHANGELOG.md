@@ -1,5 +1,9 @@
 # Changelog
 
+## 2023-11-29
+### Changed
+- Upgraded checkstyle to `10.12.5`
+
 ## 2023-11-27
 ### Changed
 - Defaulted to not using data feed URL in dependency check
