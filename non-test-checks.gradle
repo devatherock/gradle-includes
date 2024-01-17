@@ -92,13 +92,17 @@ if(project.plugins.findPlugin('org.jlleitschuh.gradle.ktlint')) {
 
 /** Dependency check plugin config **/
 if (project.plugins.findPlugin('org.owasp.dependencycheck')) {
-    dependencyCheck {
-        nvd {
-            apiKey = System.env.NVD_API_KEY
-            validForHours = 240
+    String pluginVersion = findPluginVersion('org.owasp.dependencycheck')
 
-            if (Boolean.parseBoolean(getPropertyValue('dependency.check.nvd.useDatafeedUrl', 'false'))) {
-                datafeedUrl = 'https://jeremylong.github.io/DependencyCheck/hb_nvd/'
+    dependencyCheck {
+        if (Integer.parseInt(pluginVersion.substring(0, pluginVersion.indexOf('.'))) > 8) {
+            nvd {
+                apiKey = System.env.NVD_API_KEY
+                validForHours = 240
+
+                if (Boolean.parseBoolean(getPropertyValue('dependency.check.nvd.useDatafeedUrl', 'false'))) {
+                    datafeedUrl = 'https://jeremylong.github.io/DependencyCheck/hb_nvd/'
+                }
             }
         }
         data {
@@ -173,4 +177,23 @@ void downloadFile(String fileName) {
     } else {
         file << new File("${gradleIncludesLocation}/config/${fileName}").text
     }
+}
+
+/**
+ * Finds the version of a plugin used
+ *
+ * @param pluginName
+ * @return the plugin's version
+ */
+String findPluginVersion(String pluginName) {
+    String pluginVersion
+
+    if (project.plugins.findPlugin(pluginName)) {
+        pluginVersion = project.buildscript.configurations.classpath.resolvedConfiguration.firstLevelModuleDependencies.find {
+            it.moduleGroup == pluginName
+        }.moduleVersion
+        logger.info("Version of '${pluginName}': ${pluginVersion}")
+    }
+
+    return pluginVersion
 }
