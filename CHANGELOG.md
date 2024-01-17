@@ -1,5 +1,9 @@
 # Changelog
 
+## 2024-01-17
+### Changed
+- Configured the dependency check plugin based on version
+
 ## 2023-11-29
 ### Changed
 - Upgraded checkstyle to `10.12.5`
