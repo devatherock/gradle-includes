@@ -1,0 +1,41 @@
+/** Native binary build using micronaut **/
+if(project.plugins.findPlugin('io.micronaut.application')) {
+    graalvmNative {
+        binaries {
+            main {
+                buildArgs.add('--verbose')
+                buildArgs.add("-J-Xmx${System.getProperty('native.xmx', '6144m')}")
+                buildArgs.add('-H:InitialCollectionPolicy=BySpaceAndTime')
+
+                if (System.properties['native.threads']) {
+                    buildArgs.add("-H:NumberOfThreads=${System.properties['native.threads']}")
+                }
+
+                if (System.properties['native.arch']) {
+                    buildArgs.add("-march=${System.properties['native.arch']}")
+                }
+
+                // Quick build mode
+                if (System.properties['native.mode'] == 'dev') {
+                    buildArgs.add('-Ob')
+                }
+            }
+        }
+    }
+
+    tasks.named('dockerfileNative') {
+        jdkVersion = System.getProperty('native.jdk', '21')
+
+        baseImage('gcr.io/distroless/cc-debian12:latest')
+        instruction('LABEL maintainer="devatherock@gmail.com"')
+        instruction("""
+        LABEL io.github.devatherock.version="${project.version}"
+    """.trim())
+    }
+
+    tasks.named('dockerBuildNative') {
+        images = [
+            "devatherock/${project.name}:${System.getProperty('native.tag', 'latest')}"
+        ]
+    }
+}
