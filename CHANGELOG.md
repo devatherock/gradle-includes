@@ -1,5 +1,9 @@
 # Changelog
 
+## 2024-09-22
+### Added
+- Config for native binary build
+
 ## 2024-01-17
 ### Changed
 - Configured the dependency check plugin based on version
