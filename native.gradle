@@ -1,5 +1,5 @@
 /** Native binary build using micronaut **/
-if(project.plugins.findPlugin('io.micronaut.application')) {
+if (project.plugins.findPlugin('io.micronaut.application')) {
     graalvmNative {
         binaries {
             main {
