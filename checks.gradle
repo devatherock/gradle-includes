@@ -2,7 +2,7 @@ apply from: "${getPropertyValue('gradle.includes.location', 'https://raw.githubu
 
 if(project.plugins.findPlugin('jacoco')) {
     jacoco {
-        toolVersion = '0.8.8'
+        toolVersion = getPropertyValue('jacoco.version', '0.8.9')
     }
 
     jacocoTestReport {
