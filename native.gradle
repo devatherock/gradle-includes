@@ -1,5 +1,25 @@
 /** Native binary build using micronaut **/
 if (project.plugins.findPlugin('io.micronaut.application')) {
+    tasks.named('dockerfileNative') {
+        jdkVersion = System.getProperty('native.jdk', '21')
+
+        baseImage('gcr.io/distroless/cc-debian12:latest')
+        instruction('LABEL maintainer="devatherock@gmail.com"')
+        instruction("""
+        LABEL io.github.devatherock.version="${project.version}"
+    """.trim())
+    }
+
+    tasks.named('dockerBuildNative') {
+        images = [
+            "devatherock/${project.name}:${System.getProperty('native.tag', 'latest')}"
+        ]
+    }
+}
+
+/** Native binary build using micronaut or the graalvm plugin **/
+if (project.plugins.findPlugin('io.micronaut.application') ||
+        project.plugins.findPlugin('org.graalvm.buildtools.native')) {
     graalvmNative {
         binaries {
             main {
@@ -21,21 +41,5 @@ if (project.plugins.findPlugin('io.micronaut.application')) {
                 }
             }
         }
-    }
-
-    tasks.named('dockerfileNative') {
-        jdkVersion = System.getProperty('native.jdk', '21')
-
-        baseImage('gcr.io/distroless/cc-debian12:latest')
-        instruction('LABEL maintainer="devatherock@gmail.com"')
-        instruction("""
-        LABEL io.github.devatherock.version="${project.version}"
-    """.trim())
-    }
-
-    tasks.named('dockerBuildNative') {
-        images = [
-            "devatherock/${project.name}:${System.getProperty('native.tag', 'latest')}"
-        ]
     }
 }

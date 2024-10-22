@@ -1,5 +1,9 @@
 # Changelog
 
+## 2024-10-22
+### Changed
+- Configured `org.graalvm.buildtools.native` plugin directly
+
 ## 2024-09-29
 ### Changed
 - Upgraded jacoco to `0.8.9`, for Java 21 support
