@@ -39,6 +39,13 @@ if (project.plugins.findPlugin('io.micronaut.application') ||
                 if (System.properties['native.mode'] == 'dev') {
                     buildArgs.add('-Ob')
                 }
+
+                // Additional args
+                if (System.properties['native.args']) {
+                    System.properties['native.args'].split(' ').each {
+                        buildArgs.add(it)
+                    }
+                }
             }
         }
     }
