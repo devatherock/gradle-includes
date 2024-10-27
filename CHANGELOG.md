@@ -1,9 +1,13 @@
 # Changelog
 
-## 2024-10-22
+## 2024-10-27
 ### Added
 - Support for passing additional args to the native build
 
+### Changed
+- Excluded files in `build` folder from spotless check
+
+## 2024-10-22
 ### Changed
 - Configured `org.graalvm.buildtools.native` plugin directly
 

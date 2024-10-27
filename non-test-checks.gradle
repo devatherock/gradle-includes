@@ -28,6 +28,7 @@ if(project.plugins.findPlugin('com.diffplug.spotless')) {
     spotless {
         if(project.plugins.findPlugin('java')) {
             java {
+                targetExclude('build/**')
                 importOrder('java', 'javax', 'org', 'io.github.devatherock', '')
                 removeUnusedImports()
                 eclipse(eclipseFormatterVersion).configFile(codeFormatterConfig)
