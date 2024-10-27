@@ -1,6 +1,9 @@
 # Changelog
 
 ## 2024-10-22
+### Added
+- Support for passing additional args to the native build
+
 ### Changed
 - Configured `org.graalvm.buildtools.native` plugin directly
 
