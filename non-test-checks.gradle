@@ -7,7 +7,7 @@ downloadFile(checkstyleConfig)
 
 checkstyle {
     configFile rootProject.file(checkstyleConfig)
-    toolVersion = '10.12.5'
+    toolVersion = '10.21.0'
 }
 
 /** Codenarc config **/

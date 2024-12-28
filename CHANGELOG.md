@@ -1,5 +1,9 @@
 # Changelog
 
+## 2024-12-28
+### Changed
+- Upgraded checkstyle to `10.21.0`
+
 ## 2024-10-27
 ### Added
 - Support for passing additional args to the native build
